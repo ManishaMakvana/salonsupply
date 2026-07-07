@@ -58,7 +58,7 @@ export default function DashboardPage() {
                 if (parsed?.role === 'distributor' || parsed?.role === 'super_admin') {
                     try {
                         const response = await salonsApi.getAll();
-                        const salonList = Array.isArray(response) ? response : response.data ?? [];
+                        const salonList = Array.isArray(response) ? response : [];
                         salonsCount = salonList.length;
                         const alerts = await productsApi.getLowStock();
                         setLowStock(alerts);

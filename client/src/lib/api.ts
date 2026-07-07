@@ -106,7 +106,7 @@ export const products = {
         }
         return res.json();
     },
-    imageUrl: (path: string | null) => {
+    imageUrl: (path: string | null | undefined) => {
         if (!path) return null;
         if (path.startsWith('http')) return path;
         return `${API_BASE}${path}`;

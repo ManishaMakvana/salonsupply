@@ -50,7 +50,7 @@ export default function SalesmenPage() {
                 salonsApi.getAll(),
                 salesmenApi.getAssignments(salesman.id),
             ]);
-            setAllSalons(Array.isArray(salonList) ? salonList : salonList.data ?? []);
+            setAllSalons(Array.isArray(salonList) ? salonList : []);
             setSelectedSalonIds(assignments.salon_ids || []);
         } catch (err) {
             console.error(err);

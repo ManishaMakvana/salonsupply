@@ -23,7 +23,7 @@ export default function SalonsPage() {
     const loadSalons = async () => {
         try {
             const response = await salonsApi.getAll();
-            setSalons(Array.isArray(response) ? response : response.data ?? []);
+            setSalons(Array.isArray(response) ? response : []);
         } catch (e) {
             console.error(e);
         } finally {
