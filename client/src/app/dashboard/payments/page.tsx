@@ -51,7 +51,7 @@ export default function PaymentsPage() {
                 paymentsApi.getUnpaidOrders(),
             ]);
             setSummary(s);
-            setPayments(p);
+            setPayments(Array.isArray(p) ? p : p.data ?? []);
             if (Array.isArray(u)) {
                 setQueue({ ready_to_collect: u, awaiting_approval: [] });
             } else {

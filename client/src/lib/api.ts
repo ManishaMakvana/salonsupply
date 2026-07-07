@@ -157,7 +157,7 @@ export const orders = {
 };
 
 export const salons = {
-    getAll: () => fetcher('/salons'),
+    getAll: () => fetcher('/salons') as Promise<any[]>,
     getMe: () => fetcher('/salons/me'),
     create: (data: Record<string, unknown>) =>
         fetcher('/salons', { method: 'POST', body: JSON.stringify(data) }),

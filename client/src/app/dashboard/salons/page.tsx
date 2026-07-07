@@ -21,8 +21,14 @@ export default function SalonsPage() {
     useEffect(() => { loadSalons(); }, []);
 
     const loadSalons = async () => {
-        try { setSalons(await salonsApi.getAll()); } catch (e) { console.error(e); }
-        finally { setLoading(false); }
+        try {
+            const response = await salonsApi.getAll();
+            setSalons(Array.isArray(response) ? response : response.data ?? []);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -41,8 +47,12 @@ export default function SalonsPage() {
         setOrderSalon(salon);
         setCart([]);
         setError(null);
-        try { setProducts(await productsApi.getAll()); }
-        catch (e: unknown) { setError(e instanceof Error ? e.message : 'Failed to load products'); }
+        try {
+            const response = await productsApi.getAll();
+            setProducts(Array.isArray(response) ? response : response.data ?? []);
+        } catch (e: unknown) {
+            setError(e instanceof Error ? e.message : 'Failed to load products');
+        }
     };
 
     const addToCart = (product: any) => {

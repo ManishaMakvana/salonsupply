@@ -37,16 +37,28 @@ export default function DashboardPage() {
         const loadDashboardData = async () => {
             try {
                 const parsed = user;
-                const orders = await ordersApi.getAll();
+                const response = await ordersApi.getAll();
+
+                const orders = Array.isArray(response)
+                    ? response
+                    : response.data ?? [];
+
                 setRecentOrders(orders);
 
-                const totalRevenue = orders.reduce((sum: number, o: any) => sum + parseFloat(o.total_amount), 0);
-                const pendingOrders = orders.filter((o: any) => o.status === 'pending').length;
+                const totalRevenue = orders.reduce(
+                    (sum: number, o: any) => sum + Number(o.total_amount || 0),
+                    0
+                );
+
+                const pendingOrders = orders.filter(
+                    (o: any) => o.status === "pending"
+                ).length;
 
                 let salonsCount = 0;
                 if (parsed?.role === 'distributor' || parsed?.role === 'super_admin') {
                     try {
-                        const salonList = await salonsApi.getAll();
+                        const response = await salonsApi.getAll();
+                        const salonList = Array.isArray(response) ? response : response.data ?? [];
                         salonsCount = salonList.length;
                         const alerts = await productsApi.getLowStock();
                         setLowStock(alerts);

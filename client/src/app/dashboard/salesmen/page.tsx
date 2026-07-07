@@ -35,7 +35,7 @@ export default function SalesmenPage() {
     const loadSalesmen = async () => {
         try {
             const data = await salesmenApi.getAll();
-            setSalesmen(data);
+            setSalesmen(Array.isArray(data) ? data : data.data ?? []);
         } catch (err) {
             console.error(err);
         } finally {
@@ -50,7 +50,7 @@ export default function SalesmenPage() {
                 salonsApi.getAll(),
                 salesmenApi.getAssignments(salesman.id),
             ]);
-            setAllSalons(salonList);
+            setAllSalons(Array.isArray(salonList) ? salonList : salonList.data ?? []);
             setSelectedSalonIds(assignments.salon_ids || []);
         } catch (err) {
             console.error(err);
